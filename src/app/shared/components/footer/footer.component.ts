@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-footer',
-  imports: [],
+  standalone: true,
+  imports: [RouterLink],
   templateUrl: './footer.component.html',
-  styleUrl: './footer.component.scss',
+  styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent {
-
+  // Dynamically calculate the current year so you never have to manually update it
+  protected currentYear: number = new Date().getFullYear();
 }

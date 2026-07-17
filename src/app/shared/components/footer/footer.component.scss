@@ -1,0 +1,115 @@
+.main-footer {
+  background-color: #1f2937; // Dark slate theme contrast
+  color: #9ca3af;
+  padding-top: 3rem;
+  margin-top: auto; // Pushes footer to bottom if page content is short
+  border-top: 1px solid #374151;
+
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem 2rem 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+
+    // Responsive split layout rule
+    @media (min-width: 768px) {
+      grid-template-columns: 2fr 1fr 1fr;
+    }
+  }
+
+  .footer-column {
+    h3 {
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 600;
+      margin: 0 0 1.25rem 0;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        margin-bottom: 0.75rem;
+
+        a {
+          color: #9ca3af;
+          text-decoration: none;
+          font-size: 0.9rem;
+          transition: color 0.15s;
+
+          &:hover {
+            color: #ffffff;
+          }
+        }
+      }
+    }
+  }
+
+  .brand-info {
+    .footer-logo {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #ffffff;
+      text-decoration: none;
+      display: inline-block;
+      margin-bottom: 1rem;
+
+      .logo-accent {
+        color: #dd0031;
+      }
+    }
+
+    .brand-description {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      max-width: 320px;
+      margin: 0;
+    }
+  }
+
+  // Legal Sub-Footer Bar
+  .footer-bottom {
+    background-color: #111827; // Ultra-dark accent
+    padding: 1.5rem 0;
+    border-top: 1px solid #2d3748;
+
+    .bottom-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      font-size: 0.85rem;
+
+      @media (min-width: 576px) {
+        flex-direction: row;
+      }
+
+      p {
+        margin: 0;
+      }
+    }
+
+    .payment-methods {
+      display: flex;
+      gap: 0.5rem;
+
+      .payment-badge {
+        background-color: #374151;
+        color: #ffffff;
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+      }
+    }
+  }
+}
