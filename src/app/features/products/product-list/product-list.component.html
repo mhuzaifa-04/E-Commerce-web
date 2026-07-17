@@ -1,0 +1,45 @@
+<div class="catalog-page">
+  <h1 class="page-title">Discover Our Products</h1>
+
+  <!-- Loading Screen Placeholder -->
+  @if (isLoading()) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading catalog items...</p>
+    </div>
+  }
+
+  <!-- Error Handling State Block -->
+  @if (hasError()) {
+    <div class="error-state">
+      <p>Oops! Something went wrong while loading products. Please try again later.</p>
+    </div>
+  }
+
+  <!-- Product Matrix Grid -->
+  @if (!isLoading() && !hasError()) {
+    <div class="product-grid">
+      @for (product of products(); track product.id) {
+        <article class="product-card">
+          <div class="image-wrapper">
+            <img [src]="product.image" [alt]="product.title" loading="lazy"  alt=""/>
+          </div>
+          
+          <div class="product-info">
+            <span class="category-tag">{{ product.category }}</span>
+            <h2 class="product-name" [title]="product.title">{{ product.title }}</h2>
+            
+            <div class="card-footer">
+              <span class="product-price">{{ product.price | currency }}</span>
+              <button class="add-to-cart-btn" (click)="handleAddToCart(product)">
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        </article>
+      } @empty {
+        <div class="empty-state">No items found matching parameters.</div>
+      }
+    </div>
+  }
+</div>
