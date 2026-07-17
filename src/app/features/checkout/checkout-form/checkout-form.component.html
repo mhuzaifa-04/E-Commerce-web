@@ -1,1 +1,119 @@
-<p>checkout-form works!</p>
+<div class="checkout-page">
+  <h1 class="page-title">Secure Checkout</h1>
+
+  @if (cartService.cartItems().length === 0 && !isSubmitting()) {
+    <div class="fallback-box">
+      <h2>No items to check out</h2>
+      <p>Your cart is empty. Head back to the shop to find items.</p>
+      <a routerLink="/products" class="return-btn">Go to Shop</a>
+    </div>
+  } @else {
+    <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()" class="checkout-layout">
+      
+      <!-- Left Column: Step Forms -->
+      <div class="form-sections">
+        
+        <!-- Section 1: Customer Contact Info -->
+        <fieldset formGroupName="customerInfo" class="form-card">
+          <legend><h2>1. Contact Information</h2></legend>
+          
+          <div class="input-field">
+            <label for="fullName">Full Name</label>
+            <input id="fullName" type="text" formControlName="fullName" placeholder="John Doe" />
+            @if (infoGroup.get('fullName')?.touched && infoGroup.get('fullName')?.invalid) {
+              <span class="error-msg">Please enter your full name (minimum 3 characters).</span>
+            }
+          </div>
+
+          <div class="input-grid">
+            <div class="input-field">
+              <label for="email">Email Address</label>
+              <input id="email" type="email" formControlName="email" placeholder="john@example.com" />
+              @if (infoGroup.get('email')?.touched && infoGroup.get('email')?.invalid) {
+                <span class="error-msg">Please provide a valid email address style formatting.</span>
+              }
+            </div>
+
+            <div class="input-field">
+              <label for="phone">Phone Number</label>
+              <input id="phone" type="tel" formControlName="phone" placeholder="7350459862" />
+              @if (infoGroup.get('phone')?.touched && infoGroup.get('phone')?.invalid) {
+                <span class="error-msg">Please enter a valid 10-digit telephone number.</span>
+              }
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Section 2: Delivery Destination -->
+        <fieldset formGroupName="shippingAddress" class="form-card">
+          <legend><h2>2. Shipping Address</h2></legend>
+          
+          <div class="input-field">
+            <label for="street">Street Address</label>
+            <input id="street" type="text" formControlName="street" placeholder="123 Main St, Suite 4" />
+            @if (addressGroup.get('street')?.touched && addressGroup.get('street')?.invalid) {
+              <span class="error-msg">Street address information is required.</span>
+            }
+          </div>
+
+          <div class="input-grid triple">
+            <div class="input-field">
+              <label for="city">City</label>
+              <input id="city" type="text" formControlName="city" placeholder="Kamptee" />
+              @if (addressGroup.get('city')?.touched && addressGroup.get('city')?.invalid) {
+                <span class="error-msg">City is required.</span>
+              }
+            </div>
+
+            <div class="input-field">
+              <label for="state">State</label>
+              <input id="state" type="text" formControlName="state" placeholder="Maharashtra" />
+              @if (addressGroup.get('state')?.touched && addressGroup.get('state')?.invalid) {
+                <span class="error-msg">State is required.</span>
+              }
+            </div>
+
+            <div class="input-field">
+              <label for="zipCode">Zip / Postal Code</label>
+              <input id="zipCode" type="text" formControlName="zipCode" placeholder="441002" />
+              @if (addressGroup.get('zipCode')?.touched && addressGroup.get('zipCode')?.invalid) {
+                <span class="error-msg">Enter a valid zip code.</span>
+              }
+            </div>
+          </div>
+        </fieldset>
+      </div>
+
+      <!-- Right Column: Final Sticky Summary -->
+      <aside class="checkout-summary">
+        <h2>Order Review</h2>
+        <hr class="divider" />
+        
+        <div class="items-preview-list">
+          @for (item of cartService.cartItems(); track item.product.id) {
+            <div class="preview-row">
+              <span class="item-name">{{ item.quantity }}x {{ item.product.title }}</span>
+              <span class="item-price">{{ (item.product.price * item.quantity) | currency }}</span>
+            </div>
+          }
+        </div>
+
+        <hr class="divider" />
+        <div class="total-row">
+          <span>Amount Due:</span>
+          <span class="price">{{ cartService.totalPrice() | currency }}</span>
+        </div>
+
+        <button type="submit" class="place-order-btn" [disabled]="checkoutForm.invalid || isSubmitting()">
+          @if (isSubmitting()) {
+            Processing Order...
+          } @else {
+            Authorize & Authorize Order
+          }
+        </button>
+        <a routerLink="/cart" class="back-link">Return to Cart</a>
+      </aside>
+
+    </form>
+  }
+</div>
